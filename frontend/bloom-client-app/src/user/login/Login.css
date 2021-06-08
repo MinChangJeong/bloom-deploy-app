@@ -1,0 +1,68 @@
+.login_body {
+    background-color: #fafafa;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* .form_container {
+    background-color: white;
+    width: 60%;
+    height: 80%;
+    border-radius: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */
+
+/* .login_title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px;
+    padding-top: 0px;
+    padding-bottom: 20px;
+} */
+
+/* .input_form {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+.id, .pw {
+    color: #707070;
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.id_form, .pw_form {
+    color: #CECECE;
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+.forgot_pw {
+    color: #707070;
+    font-size: 14px;
+    text-align: right;
+    margin-bottom: 30px;
+} */
+
+/* .login_button {
+    border-style: none;
+    background-image: 
+        linear-gradient(135deg, #FFFABF, #D8DFEC, #D5C6E3);
+} */
+
+/* .ant-btn-primary {
+    border-style: none;
+    background-image: linear-gradient(135deg, #FFFABF, #D8DFEC, #D5C6E3);
+} */
+
+/* .signup_button {
+    color: #707070;
+    font-size: 18px;
+    margin: 10px;
+    padding: 5px;
+} */

@@ -1,0 +1,52 @@
+/* html,
+body,
+#root,
+.App, */
+.container {
+    height: 100%;
+    margin: 0;
+}
+
+@keyframes intro_animation {
+    0% {
+        background-image: linear-gradient(135deg, #fffabf, #d8dfec, #d5c6e3);
+        clip-path: circle(40%);
+    }
+    100% {
+        background-image: linear-gradient(135deg, #fffabf, #d8dfec, #d5c6e3);
+        clip-path: circle(3%);
+        opacity: 0;
+    }
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    animation: intro_animation 3s;
+}
+
+@keyframes logo_animation {
+    0% {
+        visibility: hidden;
+    }
+    50% {
+        visibility: hidden;
+    }
+    51% {
+        clip-path: circle(1%);
+    }
+    100% {
+        clip-path: circle(100%);
+    }
+}
+.box {
+    width: 100vw;
+    height: 100vh;
+    opacity: 80%;
+    animation: logo_animation 6s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

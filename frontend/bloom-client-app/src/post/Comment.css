@@ -1,0 +1,20 @@
+.comment-form {
+    display: flex;
+}
+
+.input-container {
+    width: 90%;
+    border: 0;
+    outline: 0;
+    padding: 10px;
+    padding-left: 20px;
+    border-bottom: 0.2px solid #7070701c;
+}
+
+.button-container {
+    width: 10%;
+    border: none;
+    color: white;
+    background-color: #d5c6e3;
+    outline: 0;
+}

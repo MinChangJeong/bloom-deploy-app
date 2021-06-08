@@ -1,0 +1,22 @@
+.signup_body {
+    background-color: #fafafa;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* .signup-container {
+    margin-top: 100px;
+}
+.signup_title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 40px;
+    padding-top: 0px;
+    padding-bottom: 20px;
+}
+.ant-btn-primary {
+    border-style: none;
+    background-image: linear-gradient(135deg, #fffabf, #d8dfec, #d5c6e3);
+} */
