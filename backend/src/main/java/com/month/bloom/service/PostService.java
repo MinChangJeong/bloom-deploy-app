@@ -201,7 +201,8 @@ public class PostService {
 			Comment subComment = new Comment();
 			subComment.setText(commentRequest.getText());
 			subComment.setPost(mainComment.getPost());
-			subComment.setUser(mainComment.getUser());
+			User user = userRepository.getOne(currentUser.getId());
+			subComment.setUser(user);
 			subComment.setDeleted(false);
 			subComment.setComment(mainComment);
 			

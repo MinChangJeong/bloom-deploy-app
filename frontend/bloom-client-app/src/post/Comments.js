@@ -3,8 +3,6 @@ import { Avatar, Input, Button, notification, Form } from 'antd';
 import { Comment, Tooltip } from 'antd';
 import moment from 'moment';
 import {saveComment, deleteComment, updateIsDeletedComment, getCurrentUser} from '../util/APIUtils';
-import HashMap from 'hashmap';
-import ArrayList from "arraylist";
 import "./Comment.css"
 
 import { DeleteOutlined, MessageOutlined } from '@ant-design/icons';

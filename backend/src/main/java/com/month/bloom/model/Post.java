@@ -45,7 +45,6 @@ public class Post extends UserDateAudit {
 	@OneToMany(
 			mappedBy="post",
 			cascade = CascadeType.ALL,
-			fetch = FetchType.EAGER,
 			orphanRemoval = true)
 	private List<Comment> comments = new ArrayList<>();
 	
