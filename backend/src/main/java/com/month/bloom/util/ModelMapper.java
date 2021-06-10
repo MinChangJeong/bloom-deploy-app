@@ -40,8 +40,9 @@ public class ModelMapper {
 			commentResponse.setId(comment.getId());
 			commentResponse.setText(comment.getText());
 			
+			// comments안에 대댓글에 대한 정보를 가져오는데 문제가 있음 근데 왜 로컬은 되는데 ubuntu는 안되지?
 			User createUser = comment.getUser();
-			System.out.println(comment.getPost().getId()+" : "+comment.getText()+" / "+createUser.getUsername());
+			System.out.println(comment.getPost().getId()+" : "+comment.getText()+" / "+createUser.getId()+":"+createUser.getUsername());
 			if(createUser.getUserProfileImage() != null) {
 				UserSummary userSummary = new UserSummary(createUser.getId(), createUser.getUsername(), createUser.getName(), createUser.getUserProfileImage().getData());
 				commentResponse.setCreatedBy(userSummary);

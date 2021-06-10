@@ -64,7 +64,9 @@ public class User extends DateAudit {
 	private String bio;
 
 	// relation Role
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(
+			cascade = CascadeType.ALL,
+			fetch = FetchType.LAZY)
 	@JoinTable(name = "user_roles", 
 				joinColumns = 
 					@JoinColumn(name = "user_id"), 
