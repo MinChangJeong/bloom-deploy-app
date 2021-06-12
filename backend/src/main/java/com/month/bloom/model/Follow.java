@@ -8,21 +8,29 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
+
+import org.hibernate.annotations.GenericGenerator;
 
 import com.month.bloom.model.audit.DateAudit;
 
 @Entity
-@Table(name = "followes")
+@Table(name = "followes", uniqueConstraints = {
+		@UniqueConstraint(columnNames = {
+				"follower_id",
+				"following_id"
+		})
+})
 public class Follow extends DateAudit{
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "following_id", nullable = false)
 	User following;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "follower_id", nullable = false)
 	User follower;
 	
@@ -36,8 +44,8 @@ public class Follow extends DateAudit{
 		this.follower = follower;
 		this.following = following;
 	}
-
-
+	
+	
 	public Long getId() {
 		return id;
 	}
