@@ -1,5 +1,6 @@
 package com.month.bloom.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -64,8 +65,7 @@ public class User extends DateAudit {
 	private String bio;
 
 	// relation Role
-	@ManyToMany(
-			fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_roles", 
 				joinColumns = 
 					@JoinColumn(name = "user_id"), 
@@ -75,10 +75,17 @@ public class User extends DateAudit {
 
 	//relation Follow (Recursive Relationship , ManyToMany Relationship)
 	
+	@OneToMany(
+			cascade = CascadeType.ALL,
+			mappedBy = "user")
+	private List<Post> posts = new ArrayList<>();
+	
+	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "image_id", referencedColumnName = "id")
     private UserProfileImage userProfileImage;
 	
+	 
 	public User() {
 
 	}

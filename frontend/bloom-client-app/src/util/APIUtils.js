@@ -18,7 +18,6 @@ const request = (options) => {
             if(!response.ok) {
                 return Promise.reject(json);
             }
-            console.log(json)
             return json;
         })
     );
@@ -63,6 +62,13 @@ export function signup(signupRequest) {
         method: 'POST',
         body: JSON.stringify(signupRequest)
     });
+}
+
+export function deleteUser() {
+    return request({
+        url: API_BASE_URL + "/accounts/deleteUser",
+        method: "GET"
+    })
 }
 
 export function findUserByUsernameOrName(usernameOrName) {

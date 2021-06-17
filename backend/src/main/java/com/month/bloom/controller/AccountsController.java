@@ -9,13 +9,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+//import org.springframework.security.crypto.password.;
 
 import com.month.bloom.exception.FileStorageException;
 import com.month.bloom.model.User;
@@ -106,9 +107,23 @@ public class AccountsController {
         
 	}
 	
-//	@PostMappping("/accounts/edit/password")
+//	@PostMapping("/accounts/edit/password")
 //	@PreAuthorize("hasRole('USER')")
-//	public ResponseEntity<?> editUserPassword(@Valid @RequestBody PasswordRequest passwordRequest){
+//	public ResponseEntity<?> editUserPassword(@CurrentUser UserPrincipal currentUser,
+//												@Valid @RequestBody PasswordRequest passwordRequest){
+//		User user = userRepository.getOne(currentUser.getId());
+//		
 //		
 //	}
+	
+	@GetMapping("/accounts/deleteUser")
+	@PreAuthorize("hasRole('USER')")
+	public ResponseEntity<?> deleteUser(@CurrentUser UserPrincipal currentUser) {
+		User user = userRepository.getOne(currentUser.getId());
+		
+		userRepository.delete(user);
+		
+		return ResponseEntity.created(null)
+					.body(new ApiResponse(true, "User Successfully Deleted"));
+	}
 }
