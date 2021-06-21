@@ -5,14 +5,16 @@ import { formatDateTime } from '../../util/Helpers';
 import './EditProfile.css';
 import {Form, Input, notification, Button, Menu, Dropdown, Divider} from 'antd';
 import {post} from 'axios';
-import { getCurrentUser, getUserProfile } from '../../util/APIUtils';
-import {  checkEditUsernameAvailability, checkEditEmailAvailability, editUserInfo } from '../../util/APIUtils';
+import { deleteComment, getCurrentUser, getUserProfile } from '../../util/APIUtils';
+import {  checkEditUsernameAvailability, checkEditEmailAvailability, editUserInfo, deleteUser } from '../../util/APIUtils';
 import { 
     NAME_MIN_LENGTH, NAME_MAX_LENGTH, 
     USERNAME_MIN_LENGTH, USERNAME_MAX_LENGTH,
     EMAIL_MAX_LENGTH, ACCESS_TOKEN,
     API_BASE_URL
 } from '../../constants';
+import { useHistory } from 'react-router-dom';
+
 
 import { Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
@@ -20,47 +22,6 @@ import ImgCrop from 'antd-img-crop';
 const FormItem = Form.Item;
 
 function EditProfileImage() {
-    // const [images, setImages] =  useState({
-    //     value : null,
-    // })
-
-    // const onChangedImages = (e) => {
-    //     setImages({
-    //         ...images,
-    //         value : e.target.files[0],
-    //         validateStatus : 'success',
-    //         errorMsg : null
-    //     })
-    // }
-
-    // const handleImageSubmit = (e) => {
-    //     e.preventDefault();
-        
-    //     const formData = new FormData();
-    //     formData.append('image', images.value);
-      
-    //     const config = {
-    //         headers : {
-    //             'Content-Type' : 'multipart/form-data',
-    //             'Authorization' : `Bearer ${localStorage.getItem(ACCESS_TOKEN)}`
-    //         }
-    //     }
-
-        // return post(API_BASE_URL+'/accounts/edits/image', formData, config)
-        //     .then(response => {
-        //         notification.success({
-        //             message : 'Bloom',
-        //             description : 'Successfully edit profile image!'
-        //         })
-        //     })
-        //     .catch(error => {
-        //         notification.error({
-        //             message : 'Bloom',
-        //             description : error.message || 'Sorry Somthing was wrong'
-        //         })
-        //     })
-    // }
-
     const [fileList, setFileList] = useState([]);
 
     const handleUpload = (info) => {
@@ -125,21 +86,6 @@ function EditProfileImage() {
                 justifyContent:"center",
                 alignContent:"center"
             }}>
-            {/* <form >
-                <input type="file" onChange={(e) => {onChangedImages(e)}}/>
-                <Button 
-                        style={{
-                            borderStyle: "none",
-                            backgroundImage: "linear-gradient(135deg, #FFFABF, #D8DFEC, #D5C6E3)" 
-                        }} 
-                        type="primary" 
-                        block shape ="round" 
-                        htmlType="submit"
-                        onClick={handleImageSubmit}
-                    >
-                    Save
-                </Button>
-            </form> */}
             <ImgCrop
                 className="imageUpload-container"
             >
@@ -172,10 +118,57 @@ function EditProfileImage() {
     );
 }
 
+function DeleteAccount({currentUser}) {
+    let history = useHistory();
+
+    // 정말 삭제할건지 물어보는 게 필요함!!
+
+    useEffect(() => {
+        console.log(currentUser)
+    })
+
+    const handleDeleteAccount = () => {
+        deleteUser()  
+            .then(response => {
+                notification.success({
+                    message: 'Polling App',
+                    description: response.message,
+                }); 
+                history.push("/signup");
+            })
+    }
+
+    return (
+        <div>
+            <h3>Delete Account</h3>
+            <Button 
+                type="primary" 
+                htmlType="submit" 
+                size="large"
+                onClick={handleDeleteAccount}
+                block shape ="round" 
+                style={{
+                    marginBottom: "40px",
+                    borderStyle: "none",
+                    width: "120px",
+                    backgroundImage: "linear-gradient(135deg, #fffabf, #d8dfec, #d5c6e3)"
+                }}
+                >
+                Delete Account
+            </Button>
+        </div>
+    );
+}
+
 function EditProfile() {
+    let history = useHistory();
+
     // 현재 edit 하고 있는 유저의 username, email을 제외하고 validate를 진행하는 코드를 만들어야함.
     const [user, setUser] = useState([]);
     const [currentUser, setCurrentUser] = useState([]);
+
+    const [editImageState, setEditImageStaate] = useState(false);
+    const [deleteAccountState, setDeleteAccountState] = useState(false);
 
     useEffect(() => {   
         // 새로 리랜더링하면 에러나는건 react의 특징인가?
@@ -195,10 +188,6 @@ function EditProfile() {
                 setUser(response);
             })
     } 
-
-    useEffect(() => {
-        console.log(currentUser)
-    }, [currentUser])
 
     useEffect(() => {
         console.log(user.id)
@@ -439,11 +428,7 @@ function EditProfile() {
             errorMsg: null
         }
     }
-    const [editImageState, setEditImageStaate] = useState(false);
 
-    useEffect(() => {
-        console.log(editImageState)
-    }, [editImageState])
 
     return (
         <div className="edit-profile-container">
@@ -455,7 +440,10 @@ function EditProfile() {
                                 border: "none",
                                 fontSize:"18px",
                             }}
-                            onClick={(e) => setEditImageStaate(false)}
+                            onClick={(e) => {
+                                setEditImageStaate(false)
+                                setDeleteAccountState(false)
+                            }}
                             
                         >
                             Edit Profile 
@@ -468,16 +456,34 @@ function EditProfile() {
                                 border: "none",
                                 fontSize:"18px"
                             }}
-                            onClick={(e) => setEditImageStaate(true)}
+                            onClick={(e) => {
+                                setEditImageStaate(true)
+                                setDeleteAccountState(false)
+                            }}
                         >
                             Edit Profile Image
+                        </Button>
+                    </div>
+                    <Divider />
+                    <div className="delete-acount">
+                        <Button
+                            style={{
+                                border: "none",
+                                fontSize:"18px"
+                            }}
+                            onClick={(e) =>  {
+                                setEditImageStaate(false)
+                                setDeleteAccountState(true)
+                            }}
+                        >
+                            Delete Account
                         </Button>
                     </div>
                     <Divider />
                 </div>
                 
                 {
-                    !editImageState ? (
+                    editImageState === false && deleteAccountState ===  false ? (
                         <div className="edit-profile-info-container">
                             <div className="for-profile-user-details">
                                 <div className="user-avatar">
@@ -610,14 +616,25 @@ function EditProfile() {
                             </div>
                         </div>
                     ) : (
-                        <div className="edit-profile-image-container">
-                            <EditProfileImage />
-                        </div> 
-                    )
+                        editImageState === true && deleteAccountState === false ? (
+                            <div className="edit-profile-image-container">
+                                <EditProfileImage />
+                            </div>
+                        ) : (
+                            editImageState === false && deleteAccountState === true ? (
+                                <div className="delete-account-container">
+                                    <DeleteAccount currentUser={currentUser} /> 
+                                </div>
+                            ) : (
+                                null
+                            )   
+                        )
+                    ) 
                 }
             </div>
         </div>
     );
 }
+
 
 export default EditProfile;
