@@ -1,7 +1,10 @@
-# Bloom
-###### 2021.02.15 ~ 2021.05.31
+<h1 align="center"> Bloom </h1>
 
+<h3 align="center"> 2021.02.15 ~ 2021.05.31 </h3>
 <h3 align="center"> Try blooming in your tree </h3>
+<h3 align="center">
+  <a href="https://www.bloomonth.com/">bloomonth.com</a>
+</h3>
 
 <p align="center"> <img src="./img/Bloom4.png" height="300" weigth="300"/> </p>
 
